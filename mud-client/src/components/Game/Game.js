@@ -50,14 +50,14 @@ export default class Game extends Component {
         };
         componentDidMount() {
             this.initializeGame();
-          }
+        }
         
-          render() {
+        render() {
             let { moveDirection } = this.state;
-        //Add rest between Section
+        //Add rest between Section tags
             return (
                 <Section>
                 </Section>
             );
-          }
+        }
         }
