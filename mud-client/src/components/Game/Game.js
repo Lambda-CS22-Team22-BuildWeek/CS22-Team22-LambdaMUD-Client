@@ -15,7 +15,7 @@ export default class Game extends Component {
     
 
     handleMove = direction => {
-        const baseURL = 'https://lambda-mud-test.herokuapp.com/api'
+        const baseURL = 'https://team22adv.herokuapp.com/api'
 
         config
         .axiosWithAuth()
@@ -39,7 +39,7 @@ export default class Game extends Component {
 
         initialize = () => {
         
-            const baseURL = 'https://lambda-mud-test.herokuapp.com/api'
+            const baseURL = 'https://team22adv.herokuapp.com/api'
             config
                 .axiosWithAuth()
                 .get(`${baseURL}/adv/init/`)
