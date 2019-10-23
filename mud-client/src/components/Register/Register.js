@@ -22,9 +22,6 @@ class Register extends Component {
     }
 
     handleInput = e => {
-        console.log(e.target)
-        console.log(e.target.name)
-        console.log(e.target.value)
         this.setState({
             ...this.state,
             [e.target.name]: e.target.value
@@ -32,6 +29,7 @@ class Register extends Component {
     };
 
     handleSubmit = e => {
+
         e.preventDefault();
         console.log('onSub')
 
@@ -45,15 +43,17 @@ class Register extends Component {
             loading: true
         });
 
-        const baseURL = 'https://team22adv.herokuapp.com/api/login/'
+        const baseURL = 'https://team22adv.herokuapp.com/api'
 
         axios
             .post(`${baseURL}/registration/`, credentials)
             .then(res => {
+                console.log(res)
                 localStorage.setItem("authToken", res.data.key);
                 this.setState({
                     username: "",
-                    password: "",
+                    password1: "",
+                    password2: "",
                     loading: false
                 });
                 this.props.history.push((`/`));
@@ -65,7 +65,8 @@ class Register extends Component {
         this.setState({
             ...this.state,
             username: "",
-            password: "",
+            password1: "",
+            password2: "",
             loading: false
         })
     };
@@ -106,7 +107,7 @@ class Register extends Component {
                         />
                     </FormLabel>
 
-                    <FormSubmitButton type="submit" disabled={!this.state.password}>
+                    <FormSubmitButton type="submit" disabled={!this.state.password1 && !this.state.password2} onClick={this.handleSubmit}>
                         Register
                     </FormSubmitButton>
 

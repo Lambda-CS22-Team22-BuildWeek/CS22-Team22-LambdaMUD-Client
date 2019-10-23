@@ -38,7 +38,7 @@ class Login extends Component {
             loading: true
         });
 
-        const baseURL = 'https://lambda-mud-test.herokuapp.com/api'
+        const baseURL = 'https://team22adv.herokuapp.com/api'
         
             axios
                 .post(`${baseURL}/login/`, credentials)
