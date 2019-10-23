@@ -4,17 +4,17 @@ import config from "../../config/index";
 import { Link } from "react-router-dom";
 
 class Login extends Component {
-    constructor() {
-        super();
-        this.state = {
-            username: "",
-            password: "",
-            loading: false
-        };
-    }
+    
+    state = {
+        username: "",
+        password1: "",
+        loading: false
+    };
+
 
     handleInput = e => {
         this.setState({
+            ...this.state,
             [e.target.name]: e.target.value
         });
     };
@@ -22,34 +22,59 @@ class Login extends Component {
     handleSubmit = e => {
         e.preventDefault();
         const credentials = {
-            username: this.state.username,
-            password: this.state.password
+            "username": `${this.state.username}`,
+            "password": `${this.state.password}`
         };
 
-    this.setState({
-        loading: true
-    });
-
-    axios
-        .post(`#`, credentials)
-        .then(res => {
-            localStorage.setItem("authToken", res.data.key);
-            this.setState({
-                username: "",
-                password: "",
-                loading: false
-            });
-            this.props.history.push(`/`);
+        console.log(credentials)
+        this.setState({
+            loading: true
         });
+
+        const baseURL = 'https://lambda-mud-test.herokuapp.com/api'
+        
+            axios
+                .post(`${baseURL}/login/`, credentials)
+                .then(res => {
+                    console.log(res)
+                    localStorage.setItem("authToken", res.data.key);
+                    this.setState({
+                        username: "",
+                        password: "",
+                        loading: false
+                    });
+                    this.props.history.push(`/`);
+                });
     };
 
     render() {
         return(
-            <Body>
-                <Form onSubmit={this.handleSubmit}>
+            
+                <form onSubmit={this.handleSubmit}>
+                    <input 
+                        type="text" 
+                        placeholder="username" 
+                        value={this.state.username} 
+                        name="username" 
+                        onChange={e => this.handleInput(e)}
+                    />
 
-                </Form>
-            </Body>
+                    <input 
+                        type="password" 
+                        placeholder="password" 
+                        value={this.state.password} 
+                        name="password" 
+                        onChange={e => this.handleInput(e)}
+                    />
+
+                    <input type="submit" 
+                        value="sub" 
+                        onClick={this.handleSubmit}
+                    />
+
+
+                </form>
+            
         );
     }
 }
