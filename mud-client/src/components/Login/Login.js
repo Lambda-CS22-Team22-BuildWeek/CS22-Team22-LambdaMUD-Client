@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import axios from "axios";
 import config from "../../config/index";
 import { Link } from "react-router-dom";
+import {
+    Form,
+    FormInput,
+    FormLabel,
+    FormSubmitButton,
+    FormHeader,
+} from "../Custom/Forms";
 
 class Login extends Component {
     
@@ -50,30 +57,38 @@ class Login extends Component {
     render() {
         return(
             
-                <form onSubmit={this.handleSubmit}>
-                    <input 
-                        type="text" 
-                        placeholder="username" 
-                        value={this.state.username} 
-                        name="username" 
-                        onChange={e => this.handleInput(e)}
-                    />
+                <Form onSubmit={this.handleSubmit}>
+                    <FormHeader>MUD Login</FormHeader>
 
-                    <input 
-                        type="password" 
-                        placeholder="password" 
-                        value={this.state.password} 
-                        name="password" 
-                        onChange={e => this.handleInput(e)}
-                    />
+                    <FormLabel name="Username">
+                        <FormInput
+                            onChange={this.handleInput}
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            value={this.state.username}
+                            />
+                    </FormLabel>
 
-                    <input type="submit" 
-                        value="sub" 
-                        onClick={this.handleSubmit}
-                    />
+                    <FormLabel name="password">
+                        <FormInput 
+                        onChange={this.handleInput}
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={this.state.password}
+                        />
+                    </FormLabel>
 
+                    <FormSubmitButton type="submit" disabled={!this.state.password}>
+                        Login
+                    </FormSubmitButton>
 
-                </form>
+                    <Link to="/register">
+                        Not registered yet?
+                    </Link>
+
+                </Form>
             
         );
     }

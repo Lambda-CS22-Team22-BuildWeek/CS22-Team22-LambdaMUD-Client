@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import axios from "axios";
 import config from "../../config/index";
 import { Link } from "react-router-dom";
+import {
+    Form,
+    FormInput,
+    FormLabel,
+    FormSubmitButton,
+    FormHeader,
+} from "../Custom/Forms";
 
 class Register extends Component {
     constructor() {
@@ -15,7 +22,9 @@ class Register extends Component {
     }
 
     handleInput = e => {
-        console.log('onChange')
+        console.log(e.target)
+        console.log(e.target.name)
+        console.log(e.target.value)
         this.setState({
             ...this.state,
             [e.target.name]: e.target.value
@@ -36,7 +45,7 @@ class Register extends Component {
             loading: true
         });
 
-        const baseURL = 'https://lambda-mud-test.herokuapp.com/api'
+        const baseURL = 'https://team22adv.herokuapp.com/api/login/'
 
         axios
             .post(`${baseURL}/registration/`, credentials)
@@ -63,34 +72,49 @@ class Register extends Component {
     render() {
         return (
             
-                <form onSubmit={this.handleSubmit}>
-                    <input 
-                        type="text" 
-                        placeholder="username" 
-                        value={this.state.username} 
-                        name="username" 
-                        onChange={e => this.handleInput(e)}
-                    />
+                <Form onSubmit={this.handleSubmit}>
+                   
+                    <FormHeader>MUD Register</FormHeader>
 
-                    <input 
-                        type="password" 
-                        placeholder="password" 
-                        value={this.state.password} 
-                        name="password1" 
-                        onChange={this.handleInput}
-                    />
+                    <FormLabel name="username">
+                        <FormInput
+                            onChange={this.handleInput}
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            value={this.state.username}
+                        />
+                    </FormLabel>
 
-                    <input 
-                        type="password" 
-                        placeholder="password" 
-                        value={this.state.password} 
-                        name="password2" 
-                        onChange={this.handleInput}
-                    />
+                    <FormLabel name="password1">
+                        <FormInput
+                            onChange={this.handleInput}
+                            type="password"
+                            name="password1"
+                            placeholder="Password"
+                            value={this.state.password1}
+                        />
+                    </FormLabel>
 
-                    <input type="submit" value="sub" onClick={this.handleSubmit}/>
+                    <FormLabel name="password2">
+                        <FormInput
+                            onChange={this.handleInput}
+                            type="password"
+                            name="password2"
+                            placeholder="Confirm Password"
+                            value={this.state.password2}
+                        />
+                    </FormLabel>
 
-                </form>
+                    <FormSubmitButton type="submit" disabled={!this.state.password}>
+                        Register
+                    </FormSubmitButton>
+
+                    <Link to="/login">
+                        Already Registered?
+                    </Link>
+
+                </Form>
         
         );
     }
