@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Game from "./components/Game/Game";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import Register from "./components/Register/Register";
+import Login from "./components/Login/Login";
 
 // Check if user is authorized
 const isAuthorized = () => {
