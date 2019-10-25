@@ -14,7 +14,7 @@ export default class Game extends Component {
         error_message: "",
         current_room: '',
         firstRoom: {},
-        baseURL: 'https://team22adv.herokuapp.com/api',
+        baseURL: 'http://lambda-mud-test.herokuapp.com/api',
         allRooms: [],
         playerPosition: [0, 0]
     };
@@ -53,7 +53,7 @@ export default class Game extends Component {
     initialize = () => {
 
     
-        const baseURL = 'https://team22adv.herokuapp.com/api'
+        const baseURL = 'http://lambda-mud-test.herokuapp.com/api'
         config
             .axiosWithAuth()
             .get(`${baseURL}/adv/init/`)
@@ -105,34 +105,34 @@ export default class Game extends Component {
             })
     
            
-            // const res = await axios.get(`${this.state.baseURL}/adv/rooms`)
-            // this.setState({
-            //     ...this.state,
-            //     allRooms: // gets all rooms from api, parses data and loops over to add a coordinates property to each room.
-            //         JSON.parse(res.data.rooms)
-            //         .map(room => room = {...room, cord: [Math.floor(Math.random() * 20) * 50, Math.floor(Math.random() * 10) * 50]} ),
+            const res = await axios.get(`${this.state.baseURL}/adv/rooms`)
+            this.setState({
+                ...this.state,
+                allRooms: // gets all rooms from api, parses data and loops over to add a coordinates property to each room.
+                    JSON.parse(res.data.rooms)
+                    .map(room => room = {...room, cord: [Math.floor(Math.random() * 20) * 50, Math.floor(Math.random() * 10) * 50]} ),
                 
-            // })
+            })
     
-            // this.state.allRooms[0].cord = [450, 450]
-            // this.state.allRooms[2].cord = [400, 450]
-            // this.state.allRooms[3].cord = [400, 500]
-            // this.state.allRooms[1].cord = [350, 450]
-            // this.state.allRooms[4].cord = [350, 500]
+            this.state.allRooms[0].cord = [450, 450]
+            this.state.allRooms[2].cord = [400, 450]
+            this.state.allRooms[3].cord = [400, 500]
+            this.state.allRooms[1].cord = [350, 450]
+            this.state.allRooms[4].cord = [350, 500]
     
-            // this.setState({
-            //     ...this.state,
-            //     firstRoom: this.state.allRooms[0],
-            // })
+            this.setState({
+                ...this.state,
+                firstRoom: this.state.allRooms[0],
+            })
     
             
     
-            // this.setState({
-            //     ...this.state,
-            //     playerPosition: [...this.state.firstRoom.cord],
-            // })
+            this.setState({
+                ...this.state,
+                playerPosition: [...this.state.firstRoom.cord],
+            })
     
-            // console.log(this.state.allRooms)
+            console.log(this.state.allRooms)
         }
         
 
