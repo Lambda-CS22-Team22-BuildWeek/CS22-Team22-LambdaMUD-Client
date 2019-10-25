@@ -18,10 +18,10 @@ const Map = props => {
             }}    
         >
 
-            {props.rooms.map(room =>  <Room room={room} />)}
+            {props.rooms.map(room =>  <Room position={room.cord} room={room} />)}
             <Player
                 position={props.playerPosition}
-                // setPosition={props.setPlayerPosition}
+                setPosition={props.setPlayerPosition}
             />
         </div>
     )

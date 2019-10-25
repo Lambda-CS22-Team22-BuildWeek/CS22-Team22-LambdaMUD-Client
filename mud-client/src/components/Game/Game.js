@@ -12,7 +12,7 @@ export default class Game extends Component {
         description: "",
         moveDirection: "",
         error_message: "",
-        current_room: {},
+        current_room: '',
         firstRoom: {},
         baseURL: 'http://lambda-mud-test.herokuapp.com/api',
         allRooms: [],
@@ -22,6 +22,8 @@ export default class Game extends Component {
     
     componentDidMount = async _ => {
         console.log('didmount')
+
+        this.initialize()
 
         window.addEventListener('keydown', e => {
             console.log(e.keyCode)
@@ -54,24 +56,29 @@ export default class Game extends Component {
             
         })
 
+        this.state.allRooms[0].cord = [450, 450]
+        this.state.allRooms[2].cord = [400, 450]
+        this.state.allRooms[3].cord = [400, 500]
+        this.state.allRooms[1].cord = [350, 450]
+        this.state.allRooms[4].cord = [350, 500]
+
         this.setState({
             ...this.state,
             firstRoom: this.state.allRooms[0],
         })
 
-        this.state.firstRoom.cord = [450, 450]
         
+
         this.setState({
             ...this.state,
             playerPosition: [...this.state.firstRoom.cord],
         })
 
-        this.setState({
-            ...this.state,
-            current_room: this.state.allRooms.find(room => room.cord[0] === this.state.playerPosition[0])
-        })
-        
-        
+        // this.setState({
+        //     ...this.state,
+        //     current_room: this.state.allRooms.find(room => room.cord[0] === this.state.playerPosition[0])
+        // })
+        console.log(this.state.allRooms)
     }
     
 
@@ -91,10 +98,10 @@ export default class Game extends Component {
                     moveDirection: ""
                 })
                 : this.setState({
+                    current_room: title,
                     description,
                     error_message,
                     moveDirection: direction,
-                    current_room: this.state.allRooms.filter(room => room.cord[0] === this.state.playerPosition[0] && room.cord[1] === this.state.playerPosition[1])
                 });
         })
         .catch(err => console.log(err));
@@ -129,10 +136,12 @@ export default class Game extends Component {
             localStorage.removeItem('authToken')
             this.props.history.push('/')
         }
-        
+
+      
         render() {
             let { moveDirection } = this.state;
-            console.log(this.props)
+            console.log(this.state.current_room)
+            // this.initialize()s
 
         //Add rest between Section tags
             return (
@@ -141,10 +150,15 @@ export default class Game extends Component {
                         <input type="submit" value="Start" onClick={this.initialize} />
                         <input type="submit" value="Logout" onClick={this.logOut} />
                         <h1>Welcome, {this.state.name}</h1>
+                        <h2>{this.state.current_room}</h2>
                         <h3>{this.state.description}</h3>
                         <p>Press start and use your arrow keys for movement between rooms</p>
                     </section>
-                    <Map firstRoom={this.state.firstRoom} playerPosition={this.state.playerPosition} rooms={this.state.allRooms} />                
+                    <Map 
+                        firstRoom={this.state.firstRoom} 
+                        playerPosition={this.state.playerPosition} 
+                        rooms={this.state.allRooms} 
+                    />                
                 </>
             );
         }
