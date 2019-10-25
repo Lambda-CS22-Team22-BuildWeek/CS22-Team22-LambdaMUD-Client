@@ -17,9 +17,12 @@ class Register extends Component {
             username: "",
             password1: "",
             password2: "",
-            loading: false
+            loading: false,
+            baseURL: "http://lambda-mud-test.herokuapp.com/api"
         };
     }
+
+   
 
     handleInput = e => {
         this.setState({
@@ -43,15 +46,17 @@ class Register extends Component {
             loading: true
         });
 
-        const baseURL = 'https://team22adv.herokuapp.com/api'
+        // const baseURL = 'https://team22adv.herokuapp.com/api'
+        // const baseURL = 'http://lambda-mud-test.herokuapp.com/api'
 
         axios
-            .post(`${baseURL}/registration/`, credentials)
+            .post(`${this.state.baseURL}/registration/`, credentials)
             .then(res => {
                 console.log(res)
                 localStorage.setItem("authToken", res.data.key);
                 this.setState({
                     username: "",
+                    email: "",
                     password1: "",
                     password2: "",
                     loading: false
@@ -84,6 +89,16 @@ class Register extends Component {
                             name="username"
                             placeholder="Username"
                             value={this.state.username}
+                        />
+                    </FormLabel>
+
+                    <FormLabel name="email">
+                        <FormInput
+                            onChange={this.handleInput}
+                            type="text"
+                            name="email"
+                            placeholder="email"
+                            value={this.state.email}
                         />
                     </FormLabel>
 

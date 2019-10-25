@@ -1,0 +1,8 @@
+[build]
+base = "mud-client/"
+publish = "CS22-TEAM22-LAMBDAMUD-CLIENT/mud-client/build/"
+command = "npm run build"
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
