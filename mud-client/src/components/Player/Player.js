@@ -1,17 +1,18 @@
 import React from 'react'
-
-const Player = ({ position, setPosition }) => {
+import walkSprite from './player_walk.png'
+const Player = ({ playerPosition:{x, y}}) => {
 
     return(
         <div 
             className="player"
             style={{
                 position: "absolute",
-                top: position[1],
-                left: position[0],
-                width: '50px',
-                height: '50px',
-                border: '1px solid red'
+                top:`${x}px`,
+                left:`${y}px`,
+                width: '40px',
+                height: '40px',
+                border: '1px solid red',
+                backgroundImage: `url('${walkSprite}')`
             }}    
         />
            

@@ -2,16 +2,14 @@ import axios from "axios";
 
 export const config = {
     //URLs go here
-    //apiURL: "https://lambda-mud-test.herokuapp.com",
+    apiURL: 'https://team22adv.herokuapp.com/api',
 
     axiosWithAuth: function() {
         return axios.create({
-            baseURL: this.apiURL,
+            baseURL: this.baseURL,
             headers: {
                 Authorization: `Token ${localStorage.getItem("authToken")}`
             }
         });
     }
 };
-
-export default config;

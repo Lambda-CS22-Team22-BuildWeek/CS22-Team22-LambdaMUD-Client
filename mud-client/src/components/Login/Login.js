@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import config from "../../config/index";
+import { connect } from 'react-redux';
+import { handleOnChange, login } from '../../redux/actions'
 import { Link } from "react-router-dom";
 import {
     Form,
@@ -11,88 +13,97 @@ import {
 } from "../Custom/Forms";
 
 class Login extends Component {
-    
-    state = {
-        username: "",
-        password1: "",
-        loading: false
-    };
-
 
     handleInput = e => {
-        this.setState({
-            ...this.state,
-            [e.target.name]: e.target.value
-        });
+        this.props.handleOnChange({name: e.target.name, value: e.target.value})
     };
 
     handleSubmit = e => {
+
         e.preventDefault();
+
         const credentials = {
-            "username": `${this.state.username}`,
-            "password": `${this.state.password}`
+            "username": this.props.username,
+            "password": this.props.password,
         };
 
-        console.log(credentials)
-        this.setState({
-            loading: true
-        });
+        this.props.login(credentials, 'login')
 
-        // const baseURL = 'https://team22adv.herokuapp.com/api'
-        const baseURL = 'http://lambda-mud-test.herokuapp.com/api'
+        this.props.history.replace(`/`);
+
+
+        // const credentials = {
+        //     username: this.props.username,
+        //     password: this.props.password
+        // };
+
+        // this.setState({
+        //     loading: true
+        // });
         
-            axios
-                .post(`${baseURL}/login/`, credentials)
-                .then(res => {
-                    console.log(res)
-                    localStorage.setItem("authToken", res.data.key);
-                    this.setState({
-                        username: "",
-                        password: "",
-                        loading: false
-                    });
-                    this.props.history.push(`/`);
-                });
+        // axios
+        //     .post(`${this.props.baseURL}/login/`, credentials)
+        //     .then(res => {
+
+        //         localStorage.setItem("authToken", res.data.key);
+
+        //         this.setState({
+        //             username: "",
+        //             password: "",
+        //             loading: false
+        //         });
+
+        //         this.props.history.push(`/`);
+        //     });
     };
 
     render() {
+        console.log(this.props)
         return(
             
-                <Form onSubmit={this.handleSubmit}>
-                    <FormHeader>MUD Login</FormHeader>
+            <Form onSubmit={this.handleSubmit}>
+                <FormHeader>MUD Login</FormHeader>
 
-                    <FormLabel name="Username">
-                        <FormInput
-                            onChange={this.handleInput}
-                            type="text"
-                            name="username"
-                            placeholder="Username"
-                            value={this.state.username}
-                            />
-                    </FormLabel>
-
-                    <FormLabel name="password">
-                        <FormInput 
+                <FormLabel name="Username">
+                    <FormInput
                         onChange={this.handleInput}
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={this.state.password}
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        value={this.props.username}
                         />
-                    </FormLabel>
+                </FormLabel>
 
-                    <FormSubmitButton type="submit" disabled={!this.state.password}>
-                        Login
-                    </FormSubmitButton>
+                <FormLabel name="password">
+                    <FormInput 
+                    onChange={this.handleInput}
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={this.props.password}
+                    />
+                </FormLabel>
 
-                    <Link to="/register">
-                        Not registered yet?
-                    </Link>
+                <FormSubmitButton type="submit" >
+                    Login
+                </FormSubmitButton>
 
-                </Form>
+                <Link to="/register">
+                    Not registered yet?
+                </Link>
+
+            </Form>
             
         );
     }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+    username: state.loginState.username,
+    password: state.loginState.password
+})
+
+export default connect(
+    mapStateToProps,
+    { handleOnChange, login }
+)(Login);

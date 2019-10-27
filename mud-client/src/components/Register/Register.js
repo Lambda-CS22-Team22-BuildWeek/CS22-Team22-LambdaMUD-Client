@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { connect } from 'react-redux'; 
 import config from "../../config/index";
 import { Link } from "react-router-dom";
 import {
@@ -10,72 +11,62 @@ import {
     FormHeader,
 } from "../Custom/Forms";
 
-class Register extends Component {
-    constructor() {
-        super();
-        this.state = {
-            username: "",
-            password1: "",
-            password2: "",
-            loading: false,
-            baseURL: "http://lambda-mud-test.herokuapp.com/api"
-        };
-    }
+import { handleOnChange, login } from '../../redux/actions'
 
-   
+class Register extends Component {
 
     handleInput = e => {
-        this.setState({
-            ...this.state,
-            [e.target.name]: e.target.value
-        });
+        this.props.handleOnChange({name: e.target.name, value: e.target.value})
     };
 
     handleSubmit = e => {
 
         e.preventDefault();
-        console.log('onSub')
 
         const credentials = {
-            "username": `${this.state.username}`,
-            "password1": `${this.state.password}`,
-            "password2": `${this.state.password}`
+            "username": this.props.username,
+            "email": this.props.email,
+            "password1": this.props.password1,
+            "password2": this.props.password2
         };
 
-        this.setState({
-            loading: true
-        });
+        this.props.login(credentials, 'registration')
+        this.props.history.replace((`/`));
 
-        // const baseURL = 'https://team22adv.herokuapp.com/api'
-        // const baseURL = 'http://lambda-mud-test.herokuapp.com/api'
+        // this.setState({
+        //     loading: true
+        // });
 
-        axios
-            .post(`${this.state.baseURL}/registration/`, credentials)
-            .then(res => {
-                console.log(res)
-                localStorage.setItem("authToken", res.data.key);
-                this.setState({
-                    username: "",
-                    email: "",
-                    password1: "",
-                    password2: "",
-                    loading: false
-                });
-                this.props.history.push((`/`));
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        // axios
+        //     .post(`${this.props.baseURL}/registration/`, credentials)
+        //     .then(res => {
 
-        this.setState({
-            ...this.state,
-            username: "",
-            password1: "",
-            password2: "",
-            loading: false
-        })
+        //         localStorage.setItem("authToken", res.data.key);
+
+        //         this.setState({
+        //             username: "",
+        //             email: "",
+        //             password1: "",
+        //             password2: "",
+        //             loading: false
+        //         });
+
+        //         this.props.history.push((`/`));
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     });
+
+        // this.setState({
+        //     ...this.state,
+        //     username: "",
+        //     password1: "",
+        //     password2: "",
+        //     loading: false
+        // })
     };
     render() {
+        console.log(this.props)
         return (
             
                 <Form onSubmit={this.handleSubmit}>
@@ -88,7 +79,7 @@ class Register extends Component {
                             type="text"
                             name="username"
                             placeholder="Username"
-                            value={this.state.username}
+                            value={this.props.username}
                         />
                     </FormLabel>
 
@@ -98,7 +89,7 @@ class Register extends Component {
                             type="text"
                             name="email"
                             placeholder="email"
-                            value={this.state.email}
+                            value={this.props.email}
                         />
                     </FormLabel>
 
@@ -108,7 +99,7 @@ class Register extends Component {
                             type="password"
                             name="password1"
                             placeholder="Password"
-                            value={this.state.password1}
+                            value={this.props.password1}
                         />
                     </FormLabel>
 
@@ -118,11 +109,11 @@ class Register extends Component {
                             type="password"
                             name="password2"
                             placeholder="Confirm Password"
-                            value={this.state.password2}
+                            value={this.props.password2}
                         />
                     </FormLabel>
 
-                    <FormSubmitButton type="submit" disabled={!this.state.password1 && !this.state.password2} onClick={this.handleSubmit}>
+                    <FormSubmitButton type="submit" disabled={!this.props.password1 && !this.props.password2} onClick={this.handleSubmit}>
                         Register
                     </FormSubmitButton>
 
@@ -136,4 +127,16 @@ class Register extends Component {
     }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+
+    username: state.registerState.username,
+    email: state.registerState.email,
+    password1: state.registerState.password1,
+    password2: state.registerState.password2,
+    
+})
+
+export default connect(
+    mapStateToProps,
+    { handleOnChange, login }
+)(Register);
