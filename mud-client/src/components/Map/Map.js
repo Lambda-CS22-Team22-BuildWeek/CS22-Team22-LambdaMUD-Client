@@ -21,10 +21,10 @@ const Map = props => {
                 overflow: 'scroll'
             }}    
         >
-            {grid.map(row => <MapRow row={row} />)}
+            {/* {grid.map(row => <MapRow row={row} />)} */}
             {props.allRooms.map(room =>  <Room room={room} grid={grid} />)}
             <Player
-               playerPosition={props.playerPosition}
+            //    playerPosition={props.playerPosition}
             />
         </div>
     )

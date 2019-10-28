@@ -75,12 +75,12 @@ export const fetchRooms =  _ => async dispatch => {
 
         dispatch({type: FETCHED_ALL_ROOMS, payload: all_rooms})
         
-        for(let i  = 0; i < grid.length; i++){
-            console.log(grid[i])
-            for (let j = 0; j < grid[i].length; j++){
-                console.log(grid[i][j])
-            }
-        }
+        // for(let i  = 0; i < grid.length; i++){
+            
+        //     for (let j = 0; j < grid[i].length; j++){
+        //         if()
+        //     }
+        // }
 
     }catch(err){
 
