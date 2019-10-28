@@ -13,9 +13,12 @@ import {
     PLAYER_MOVED,
     FAILED_PLAYER_MOVE,
     LOADING,
-    ON_CHANGE
+    ON_CHANGE,
+    CANT_MOVE
 
 } from '../actions'
+
+import {grid} from '../../components/Map/grid'
 
 const initialState = {
 
@@ -23,8 +26,13 @@ const initialState = {
         description: "",
         error_message: "",
         title: '',
-        firstRoom: {},
+        current_room: {},
+        next_room: {},
+        last_room: {},
         allRooms: [],
+        playersInRoom: [],
+        grid: [...grid]
+        
     },
 
     registerState: {
@@ -45,8 +53,8 @@ const initialState = {
         userID: null,
         name: '',
         current_room: '',
-        x: 0,
-        y: 0
+        x: 400,
+        y: 400
     }
 }
 
@@ -75,15 +83,15 @@ const reducer = (state=initialState, action) => {
             }
         
         case FETCHED_ALL_ROOMS:
-            console.log(state.gameState.allRooms)
-            return{
+            return {
                 ...state,
                 gameState: {
                     ...state.gameState,
-                    allRooms: action.payload
+                    allRooms: action.payload,
+                    current_room: action.first
                 }
+                
             }
-
         case SEND_PLAYER_MOVE:
            switch(action.payload){
                 case 'w':
@@ -121,7 +129,14 @@ const reducer = (state=initialState, action) => {
                 default:
                     return state
             }
-            
+        case CANT_MOVE:
+            return{
+                ...state,
+                gameState: {
+                    ...state.gameState,
+                    description: action.payload
+                }
+            }
 
         case ON_CHANGE:
             return{
@@ -134,6 +149,16 @@ const reducer = (state=initialState, action) => {
                     ...state.registerState,
                     [action.payload.name]: action.payload.value
                 }
+            }
+        case PLAYER_MOVED:
+            return {
+                ...state,
+                gameState: {
+                    ...state.gameState,
+                    description: action.payload.description,
+                    playersInRoom: action.payload.players
+                }
+            
             }
         default:
             return state

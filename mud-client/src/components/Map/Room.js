@@ -11,14 +11,14 @@ class Room extends React.Component {
                 className="room"
                 style={{
                     position: "absolute",
-                    // top: props.x,
-                    // left: props.y,
+                    top: `${this.props.room.x}px`,
+                    left: `${this.props.room.y}px`,
                     border: "1px solid black",
                     width: "40px",
                     height: "40px"
                 }}
             >
-                Hello
+                {this.props.room.id}
             </div>
         )
     }

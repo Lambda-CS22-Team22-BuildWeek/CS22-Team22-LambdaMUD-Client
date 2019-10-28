@@ -4,7 +4,7 @@ import Player from '../Player/Player'
 import Room from './Room'
 import MapRow from './MapRow'
 import { connect } from 'react-redux';
-import {grid} from './grid'
+// import {grid} from './grid'
 import config from "../../config/index";
 
 const Map = props => {
@@ -13,18 +13,17 @@ const Map = props => {
         <div 
             className="world"
             style={{
-                width: "800px",
-                height: "400px",
+                width: "1000px",
+                height: "600px",
                 backgroundColor: "green",
                 margin: "10% auto",
                 position: "relative",
-                overflow: 'scroll'
             }}    
         >
-            {/* {grid.map(row => <MapRow row={row} />)} */}
-            {props.allRooms.map(room =>  <Room room={room} grid={grid} />)}
+            {/* {props.grid.map(row => <MapRow row={row} />)} */}
+            {props.allRooms.map(room =>  <Room room={room}  />)}
             <Player
-            //    playerPosition={props.playerPosition}
+               playerPosition={props.playerPosition}
             />
         </div>
     )
@@ -32,6 +31,7 @@ const Map = props => {
 
 const mapStateToProps = state => ({
     allRooms: state.gameState.allRooms,
+    grid: state.gameState.grid,
     playerPosition:{
         x: state.playerState.x,
         y: state.playerState.y

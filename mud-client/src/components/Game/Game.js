@@ -6,7 +6,6 @@ import Map from '../Map/Map'
 //Will add other components here as we get going
 
 class Game extends Component {
-
     logOut = _ => {
 
         localStorage.removeItem('authToken')
@@ -21,6 +20,7 @@ class Game extends Component {
 
         window.addEventListener('keydown', e => {
             console.log(e.keyCode)
+            e.preventDefault()
             switch(e.keyCode){
                 case 37:
                     return (this.props.playerMove('w'))
@@ -36,15 +36,7 @@ class Game extends Component {
                     return (this.props.playerMove('s'))
             }
         })
-
-        // const res = await axios.get(`${this.state.baseURL}/adv/rooms`)
-
-        // this.setState({
-        //     ...this.state,
-        //     allRooms: res.data.all_rooms // gets all rooms from api, parses data and loops over to add a coordinates property to each room.
-                
-            
-        // })
+        
 
         
     }
@@ -53,7 +45,8 @@ class Game extends Component {
     
     render() {
         // let { moveDirection } = this.state;
-        console.log(this.props.playerPosition)
+        console.log(this.props.playersInRoom)
+
 
     //Add rest between Section tags
         return (
@@ -62,6 +55,7 @@ class Game extends Component {
                     <input type="submit" value="Start" onClick={this.initialize} />
                     <input type="submit" value="Logout" onClick={this.logOut} />
                     <h1>Welcome, {this.props.name}</h1>
+                    <h2>Players in the room: { this.props.playersInRoom.map(player => <p style={{fontSize: '12px'}}>{player}</p>) }</h2>
                     <h2>{this.props.current_room}</h2>
                     <h3>{this.props.description}</h3>
                     <p>Press start and use your arrow keys for movement between rooms</p>
@@ -75,8 +69,10 @@ class Game extends Component {
 
     const mapStateToProps = state => ({
         name: state.playerState.name,
+        allRooms: state.gameState.allRooms,
         current_room: state.playerState.current_room,
         description: state.gameState.description,
+        playersInRoom: state.gameState.playersInRoom,
         playerPosition:{
             x: state.playerState.x,
             y: state.playerState.y
