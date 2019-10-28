@@ -81,7 +81,7 @@ class Login extends Component {
                         />
                     </FormLabel>
 
-                    <FormSubmitButton type="submit" disabled={!this.state.password}>
+                    <FormSubmitButton type="submit" disabled={!this.state.password} onClick = {this.handleSubmit}>
                         Login
                     </FormSubmitButton>
 
