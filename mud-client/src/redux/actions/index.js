@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { grid } from '../../components/Map/grid'
 import { config } from '../../config'
 
 export const SENDING_CREDENTIALS = 'SENDING_CREDENTIALS'
@@ -19,7 +20,7 @@ export const ON_CHANGE = 'ON_CHANGE'
 const baseURI = 'https://team22adv.herokuapp.com/api'
 
 
-export const login = (credential, param) => async dispatch => {
+export const login = (credential, param, history) => async dispatch => {
 
     dispatch({type: SENDING_CREDENTIALS})
 
@@ -33,6 +34,8 @@ export const login = (credential, param) => async dispatch => {
 
         dispatch({type: AUTHENTICATED_CREDENTIALS})
         localStorage.setItem('authToken', key)
+        history.push('/');
+
 
     }catch(err){
 
@@ -71,6 +74,13 @@ export const fetchRooms =  _ => async dispatch => {
         console.log('fetchRooms_res', all_rooms)
 
         dispatch({type: FETCHED_ALL_ROOMS, payload: all_rooms})
+        
+        for(let i  = 0; i < grid.length; i++){
+            console.log(grid[i])
+            for (let j = 0; j < grid[i].length; j++){
+                console.log(grid[i][j])
+            }
+        }
 
     }catch(err){
 

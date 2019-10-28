@@ -11,7 +11,6 @@ const Player = ({ playerPosition:{x, y}}) => {
                 left:`${y}px`,
                 width: '40px',
                 height: '40px',
-                border: '1px solid red',
                 backgroundImage: `url('${walkSprite}')`
             }}    
         />

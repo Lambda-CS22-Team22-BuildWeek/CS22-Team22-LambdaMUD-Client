@@ -27,9 +27,8 @@ class Login extends Component {
             "password": this.props.password,
         };
 
-        this.props.login(credentials, 'login')
+        this.props.login(credentials, 'login', this.props.history)
 
-        this.props.history.replace(`/`);
 
 
         // const credentials = {
@@ -84,7 +83,7 @@ class Login extends Component {
                     />
                 </FormLabel>
 
-                <FormSubmitButton type="submit" >
+                <FormSubmitButton type="submit" onClick={this.handleSubmit} >
                     Login
                 </FormSubmitButton>
 

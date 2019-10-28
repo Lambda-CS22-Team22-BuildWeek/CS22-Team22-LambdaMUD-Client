@@ -30,7 +30,7 @@ class Register extends Component {
             "password2": this.props.password2
         };
 
-        this.props.login(credentials, 'registration')
+        this.props.login(credentials, 'registration', this.props.history)
         this.props.history.replace((`/`));
 
         // this.setState({
@@ -113,7 +113,7 @@ class Register extends Component {
                         />
                     </FormLabel>
 
-                    <FormSubmitButton type="submit" disabled={!this.props.password1 && !this.props.password2} onClick={this.handleSubmit}>
+                    <FormSubmitButton type="submit" disabled={!this.props.password1 && !this.props.password2} >
                         Register
                     </FormSubmitButton>
 
@@ -133,7 +133,7 @@ const mapStateToProps = state => ({
     email: state.registerState.email,
     password1: state.registerState.password1,
     password2: state.registerState.password2,
-    
+
 })
 
 export default connect(

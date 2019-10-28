@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { MapMaker } from "./MapHelpers";
 import Player from '../Player/Player'
 import Room from './Room'
+import MapRow from './MapRow'
 import { connect } from 'react-redux';
-import grid from './grid'
+import {grid} from './grid'
 import config from "../../config/index";
 
 const Map = props => {
@@ -12,15 +13,16 @@ const Map = props => {
         <div 
             className="world"
             style={{
-                width: "1000px",
-                height: "500px",
+                width: "800px",
+                height: "400px",
                 backgroundColor: "green",
                 margin: "10% auto",
-                position: "relative"
+                position: "relative",
+                overflow: 'scroll'
             }}    
         >
-
-            {props.allRooms.map(room =>  <Room room={room} />)}
+            {grid.map(row => <MapRow row={row} />)}
+            {props.allRooms.map(room =>  <Room room={room} grid={grid} />)}
             <Player
                playerPosition={props.playerPosition}
             />

@@ -12,7 +12,7 @@ const isAuthorized = () => {
 //Protected route that checks if the user is Authorized, if not, routes to login page
 const ProtectedRoute = ({component: Component, ...rest}) => {
     return(
-        <Route {...rest} render={props => isAuthorized() ? (<Component {...props} />) : (<Redirect to={{pathname: "/login"}} />)} />
+        <Route {...rest} render={props => localStorage.getItem("authToken") ? (<Component {...props} />) : (<Redirect to={{pathname: "/login"}} />)} />
     )};
 
 const Router = () => {
